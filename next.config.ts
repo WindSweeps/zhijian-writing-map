@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   images: { unoptimized: true },
   basePath: isGitHubPages ? "/zhijian-writing-map" : "",
   assetPrefix: isGitHubPages ? "/zhijian-writing-map/" : "",
+  turbopack: { root: process.cwd() },
 };
 
 export default nextConfig;

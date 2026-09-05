@@ -16,21 +16,21 @@ type Block = {
 
 const blocks: Block[] = [
   {
-    id: "opening", index: "01", eyebrow: "开场 · 场景", title: "从一张无人认领的椅子开始",
-    body: "凌晨四点，候机厅的灯仍然亮得没有感情。最靠近落地窗的位置，留着一张没有人坐的椅子。故事不是从一个人开始，而是从一个人留下的空缺开始。",
-    image: "airport",
-    ref: { label: "空间与非地方", url: "placesjournal.org/non-place", note: "机场作为“非地方”：人在其中流动，却很少真正停留。可用于强化开场的疏离感。" },
+    id: "opening", index: "01", eyebrow: "第一章 · 美术馆", title: "东馆的黄昏",
+    body: "训练结束后，他带着还没散尽的草屑气息走进东馆。她靠在浅色石墙边，圆框眼镜后是一双安静的眼睛。两个人从萨特谈到加缪：如果世界没有预设的意义，人是否仍要为自己的每一次选择负责？",
+    image: "terrace",
+    ref: { label: "存在主义是一种人道主义", url: "plato.stanford.edu/entries/existentialism", note: "学姐不直接讲解理论，而是把“存在先于本质”变成对男主的追问：足球、专业和喜欢的人，哪些是他自己选择的？" },
   },
   {
-    id: "memory", index: "02", eyebrow: "第一幕 · 记忆", title: "那些被遗忘的声音",
-    body: "广播第三次念出同一个名字。每次发音都略有不同，像记忆在反复复述中改变形状。她突然记起，父亲也总是念错她朋友的名字。",
-    quote: "记忆不是仓库，而是一场每次都会重新排练的戏。",
-    ref: { label: "记忆的重构", url: "theconversation.com/memory", note: "记忆在每次提取时都可能被改写。角色的回忆不必可靠，这会成为后文转折的依据。" },
+    id: "memory", index: "02", eyebrow: "人物线 · 学妹", title: "球场边的绿色小熊",
+    body: "学妹总能让沉闷的训练场热闹起来。她穿着 Teenie Weenie 小熊绿色衬衫和牛仔短裤，齐刘海下的眼睛亮得藏不住情绪，半扎马尾随着她挥手的动作轻轻晃动。",
+    quote: "你踢球的时候那么果断，怎么下了场反而什么都不敢说？",
+    ref: { label: "学妹人物卡", url: "en.wikipedia.org/wiki/Characterization", note: "关键词：活泼、外向、直球。她代表男主熟悉而有生命力的校园日常，也会主动推动两人的关系。" },
   },
   {
-    id: "choice", index: "03", eyebrow: "第二幕 · 选择", title: "留下，还是登机",
-    body: "登机口开始关闭。屏幕上的倒计时没有催促她，只是把选择切成一秒一秒、无法复原的薄片。她把护照翻到照片那页，又合上。",
-    ref: { label: "选择的时间性", url: "plato.stanford.edu/time", note: "把抽象的选择转化成可感知的时间压力。此处可以与开场的静止座椅形成对照。" },
+    id: "choice", index: "03", eyebrow: "人物线 · 学姐", title: "回望他的那一刻",
+    body: "谈话结束时，学姐先走上露台。偏蓝的长发被风吹向身后，短上衣和长裙把她的身影留在夕阳与石墙之间。男主叫住她，她扶了一下圆框眼镜，回过头看向他。",
+    ref: { label: "第一章重要 CG", url: "www.nga.gov/visit/tours-and-guides/east-building", note: "构图：男主视角，夕阳露台，现代几何建筑形成引导线。学姐回望镜头，气氛克制、文艺，并留下感情线悬念。" },
   },
 ];
 
@@ -59,7 +59,7 @@ export default function Home() {
     <main className={`writer-app ${focus ? "is-focus" : ""}`}>
       <header className="topbar">
         <div className="brand"><span className="brand-glyph">枝</span><strong>枝间</strong><span className="brand-sub">WRITING MAP</span></div>
-        <div className="doc-name"><span className="status-dot" />长篇随笔 / <strong>候机厅里的时间</strong><button aria-label="重命名文稿">⌄</button></div>
+        <div className="doc-name"><span className="status-dot" />校园恋爱视觉小说 / <strong>越过黄昏的长传</strong><button aria-label="重命名文稿">⌄</button></div>
         <div className="top-actions">
           <span className="save-state">{saved ? "已保存" : "保存中…"}</span>
           <button className="quiet-btn" onClick={() => setFocus(!focus)}><TinyIcon>◐</TinyIcon>{focus ? "退出专注" : "专注"}</button>
@@ -81,7 +81,7 @@ export default function Home() {
           <aside className="outline-panel">
             <div className="panel-heading"><span>大纲</span><button aria-label="添加章节">＋</button></div>
             <nav>
-              <button className="outline-root active"><span className="drag">⠿</span><span className="tree-dot" />候机厅里的时间</button>
+              <button className="outline-root active"><span className="drag">⠿</span><span className="tree-dot" />越过黄昏的长传</button>
               {blocks.map((block) => (
                 <button key={block.id} className={`outline-item ${active === block.id ? "active" : ""}`} onClick={() => setActive(block.id)}>
                   <span className="outline-num">{block.index}</span><span>{block.title}</span>
@@ -89,12 +89,12 @@ export default function Home() {
               ))}
             </nav>
             <button className="add-block">＋ 添加内容块</button>
-            <div className="word-count"><span>⌁</span><div><strong>1,284</strong><small>字 · 约 5 分钟</small></div></div>
+            <div className="word-count"><span>⌁</span><div><strong>2,416</strong><small>字 · 第一章</small></div></div>
           </aside>
 
           <section className="manuscript" aria-label="正文编辑区">
             <div className="paper-meta"><span>最后编辑于 刚刚</span><span>···</span></div>
-            <div className="title-block"><p>非虚构随笔 · 初稿</p><h1 contentEditable suppressContentEditableWarning onInput={markEditing}>候机厅里的<br />时间</h1><div className="title-rule"><span /></div></div>
+            <div className="title-block"><p>校园恋爱视觉小说 · 初稿</p><h1 contentEditable suppressContentEditableWarning onInput={markEditing}>越过黄昏的<br />长传</h1><div className="title-rule"><span /></div></div>
             {blocks.map((block) => (
               <article key={block.id} className={`content-block ${active === block.id ? "selected" : ""}`} onClick={() => setActive(block.id)}>
                 <div className="block-index">{block.index}</div>
@@ -102,7 +102,7 @@ export default function Home() {
                   <p className="eyebrow">{block.eyebrow}</p>
                   <h2 contentEditable suppressContentEditableWarning onInput={markEditing}>{block.title}</h2>
                   <p className="body-copy" contentEditable suppressContentEditableWarning onInput={markEditing}>{block.body}</p>
-                  {block.image && <div className="editorial-image" role="img" aria-label="清晨的机场候机厅"><div className="window-light" /><div className="chair one" /><div className="chair two" /><span>04:17 AM</span></div>}
+                  {block.image && <figure className="editorial-image"><img src="chapter-one-terrace.png" alt="夕阳中的现代美术馆露台上，蓝色长发、戴圆框眼镜的学姐穿长裙回望男主" /><figcaption>CG 01 · 夕阳露台上的回望</figcaption></figure>}
                   {block.quote && <blockquote contentEditable suppressContentEditableWarning onInput={markEditing}>“{block.quote}”</blockquote>}
                   <div className="block-footer"><button>＋</button><span>{block.id === "memory" ? "164" : "126"} 字</span><button aria-label="拖动内容块">⠿</button></div>
                 </div>
@@ -119,7 +119,7 @@ export default function Home() {
                 <button className="ref-header" onClick={() => setRefsOpen((s) => ({ ...s, [block.id]: !s[block.id] }))}>
                   <span className="ref-type">↗</span><span><small>网页引用</small><strong>{block.ref.label}</strong></span><i>{refsOpen[block.id] ? "−" : "+"}</i>
                 </button>
-                {refsOpen[block.id] && <div className="ref-body"><a href={`https://${block.ref.url}`} target="_blank" rel="noreferrer">{block.ref.url} ↗</a><p contentEditable suppressContentEditableWarning onInput={markEditing}>{block.ref.note}</p><div className="ref-tags"><span># 场景</span><span># 理论</span></div></div>}
+                {refsOpen[block.id] && <div className="ref-body"><a href={`https://${block.ref.url}`} target="_blank" rel="noreferrer">{block.ref.url} ↗</a><p contentEditable suppressContentEditableWarning onInput={markEditing}>{block.ref.note}</p><div className="ref-tags"><span># 人物</span><span># 第一章</span></div></div>}
               </div>
             ) : null)}
             <button className="add-reference">＋ 添加引用</button>
@@ -140,9 +140,9 @@ export default function Home() {
               <path d="M 375 320 C 465 320, 445 510, 545 510" style={{ stroke: branchColor }} />
               <path d="M 805 325 C 890 325, 865 235, 945 235" style={{ stroke: overrideColor ?? branchColor }} />
             </svg>
-            <div className="map-node root-node"><small>主题</small><h2>候机厅里的时间</h2><p>一篇关于离开、记忆与选择的随笔</p><div className="node-actions"><span>1,284 字</span><button>＋</button></div></div>
+            <div className="map-node root-node"><small>主题</small><h2>越过黄昏的长传</h2><p>足球少年与两种截然不同的心动</p><div className="node-actions"><span>2,416 字</span><button>＋</button></div></div>
             {blocks.map((block, idx) => <div key={block.id} className={`map-node branch-node node-${idx + 1}`} style={{ borderTopColor: branchColor }} onClick={() => setActive(block.id)}><small>{block.eyebrow}</small><h3>{block.title}</h3><p>{block.body.slice(0, 48)}…</p><span className="node-ref">↗ 1 条引用</span></div>)}
-            <div className="map-node child-node" style={{ borderTopColor: overrideColor ?? branchColor }}><small>细节 · 伏笔</small><h3>父亲念错的名字</h3><p>记忆的不可靠性，在这里第一次露出裂缝。</p><span className="node-ref">⊙ 颜色已覆盖</span></div>
+            <div className="map-node child-node" style={{ borderTopColor: overrideColor ?? branchColor }}><small>男主 · 核心矛盾</small><h3>选择自己的位置</h3><p>球场上习惯前锋位置的他，第一次无法判断该往哪里跑。</p><span className="node-ref">⊙ 颜色已覆盖</span></div>
             <button className="floating-add">＋ 添加分支</button>
             <div className="color-popover">
               <div><strong>分支颜色</strong><small>应用到所有子级</small></div>
