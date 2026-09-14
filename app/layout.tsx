@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "越过黄昏的长传｜枝间 Writing Map",
-  description: "足球少年、活泼学妹与文艺学姐的校园恋爱视觉小说创作地图。",
+  title: "枝间｜本地优先的写作地图",
+  description: "在本地文件夹中管理 Markdown 正文、JSON 结构、引用与多媒体内容。",
 };
 
 export default function RootLayout({

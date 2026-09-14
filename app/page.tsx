@@ -16,26 +16,7 @@ type Block = {
   ref?: { label: string; url: string; note: string };
 };
 
-const initialBlocks: Block[] = [
-  {
-    id: "opening", index: "01", eyebrow: "第一章 · 美术馆", title: "东馆的黄昏",
-    body: "训练结束后，他带着还没散尽的草屑气息走进东馆。她靠在浅色石墙边，圆框眼镜后是一双安静的眼睛。两个人从萨特谈到加缪：如果世界没有预设的意义，人是否仍要为自己的每一次选择负责？",
-    image: "chapter-one-terrace.png",
-    imagePath: "assets/chapter-one-terrace.png",
-    ref: { label: "存在主义是一种人道主义", url: "plato.stanford.edu/entries/existentialism", note: "学姐不直接讲解理论，而是把“存在先于本质”变成对男主的追问：足球、专业和喜欢的人，哪些是他自己选择的？" },
-  },
-  {
-    id: "memory", index: "02", eyebrow: "人物线 · 学妹", title: "球场边的绿色小熊",
-    body: "学妹总能让沉闷的训练场热闹起来。她穿着 Teenie Weenie 小熊绿色衬衫和牛仔短裤，齐刘海下的眼睛亮得藏不住情绪，半扎马尾随着她挥手的动作轻轻晃动。",
-    quote: "你踢球的时候那么果断，怎么下了场反而什么都不敢说？",
-    ref: { label: "学妹人物卡", url: "en.wikipedia.org/wiki/Characterization", note: "关键词：活泼、外向、直球。她代表男主熟悉而有生命力的校园日常，也会主动推动两人的关系。" },
-  },
-  {
-    id: "choice", index: "03", eyebrow: "人物线 · 学姐", title: "回望他的那一刻",
-    body: "谈话结束时，学姐先走上露台。偏蓝的长发被风吹向身后，短上衣和长裙把她的身影留在夕阳与石墙之间。男主叫住她，她扶了一下圆框眼镜，回过头看向他。",
-    ref: { label: "第一章重要 CG", url: "www.nga.gov/visit/tours-and-guides/east-building", note: "构图：男主视角，夕阳露台，现代几何建筑形成引导线。学姐回望镜头，气氛克制、文艺，并留下感情线悬念。" },
-  },
-];
+const initialBlocks: Block[] = [];
 
 const branchColors = ["#d96c52", "#527a68", "#5575a8", "#a97b42", "#806b9b"];
 
@@ -45,8 +26,8 @@ function TinyIcon({ children }: { children: React.ReactNode }) {
 
 export default function Home() {
   const [blocks, setBlocks] = useState<Block[]>(initialBlocks);
-  const [workspaceTitle, setWorkspaceTitle] = useState("越过黄昏的长传");
-  const [workspaceKind, setWorkspaceKind] = useState("校园恋爱视觉小说");
+  const [workspaceTitle, setWorkspaceTitle] = useState("未命名工作区");
+  const [workspaceKind, setWorkspaceKind] = useState("写作项目");
   const [mode, setMode] = useState<Mode>("linear");
   const [active, setActive] = useState("memory");
   const [refsOpen, setRefsOpen] = useState<Record<string, boolean>>({ opening: true, memory: true, choice: true });
@@ -54,7 +35,7 @@ export default function Home() {
   const [saved, setSaved] = useState(true);
   const [branchColor, setBranchColor] = useState("#d96c52");
   const [overrideColor, setOverrideColor] = useState<string | null>("#5575a8");
-  const [sideNote, setSideNote] = useState("这里的节奏可以再慢一点。让读者先看见空间，再听见广播。");
+  const [sideNote, setSideNote] = useState("");
   const [workspaceStatus, setWorkspaceStatus] = useState("示例工作区");
   const directoryRef = useRef<any>(null);
   const activeBlock = useMemo(() => blocks.find((item) => item.id === active) ?? blocks[0] ?? { id: "", index: "—", title: "未选择内容块", eyebrow: "", body: "" }, [active, blocks]);
@@ -211,6 +192,20 @@ export default function Home() {
 
           <section className="manuscript" aria-label="正文编辑区">
             <div className="paper-meta"><span>最后编辑于 刚刚</span><span>···</span></div>
+            {blocks.length === 0 ? (
+              <div className="empty-workspace">
+                <p className="empty-kicker">LOCAL-FIRST WRITING</p>
+                <h1>枝间写作地图</h1>
+                <p className="empty-intro">选择本地工作区开始写作。公开网页不保存、上传或展示你的草稿。</p>
+                <div className="feature-list">
+                  <div><strong>线性写作</strong><span>在大纲、正文与引用之间专注创作。</span></div>
+                  <div><strong>Map 结构</strong><span>用父子节点和分支颜色整理叙事关系。</span></div>
+                  <div><strong>多媒体块</strong><span>每个内容块可包含正文、图片、引用与旁注。</span></div>
+                  <div><strong>本地工作区</strong><span>通过 JSON 与 Markdown 完整读取和写回文件夹。</span></div>
+                </div>
+                <div className="empty-actions"><button onClick={openWorkspace}>打开本地工作区</button><button onClick={saveWorkspace}>创建空白工作区</button></div>
+              </div>
+            ) : <>
             <div className="title-block"><p>{workspaceKind} · 本地工作区</p><h1 contentEditable suppressContentEditableWarning onBlur={(event) => { setWorkspaceTitle(event.currentTarget.textContent || "未命名作品"); markEditing(); }}>{workspaceTitle}</h1><div className="title-rule"><span /></div></div>
             {blocks.map((block) => (
               <article key={block.id} className={`content-block ${active === block.id ? "selected" : ""}`} onClick={() => setActive(block.id)}>
@@ -225,7 +220,8 @@ export default function Home() {
                 </div>
               </article>
             ))}
-            <button className="continue-btn">＋ 继续写作</button>
+            <button className="continue-btn">＋ 添加内容块</button>
+            </>}
           </section>
 
           <aside className="references-panel">
@@ -251,6 +247,7 @@ export default function Home() {
           </div>
           <div className="map-canvas">
             <div className="map-grid" />
+            {blocks.length === 0 ? <div className="map-empty-state"><strong>Map 结构</strong><p>打开本地工作区后，内容块会按父子关系显示在这里。</p><button onClick={openWorkspace}>打开本地工作区</button></div> : <>
             <svg className="connectors" viewBox="0 0 1200 650" preserveAspectRatio="none" aria-hidden="true">
               <path d="M 375 320 C 465 320, 445 145, 545 145" style={{ stroke: branchColor }} />
               <path d="M 375 320 C 470 320, 465 325, 545 325" style={{ stroke: branchColor }} />
@@ -266,6 +263,7 @@ export default function Home() {
               <div className="swatches">{branchColors.map((color) => <button key={color} aria-label={`选择颜色 ${color}`} className={branchColor === color ? "active" : ""} style={{ background: color }} onClick={() => { setBranchColor(color); markEditing(); }} />)}</div>
               <label><input type="checkbox" checked={overrideColor !== null} onChange={(e) => { setOverrideColor(e.target.checked ? "#5575a8" : null); markEditing(); }} /> 子子块单独覆盖颜色</label>
             </div>
+            </>}
           </div>
         </section>
       )}

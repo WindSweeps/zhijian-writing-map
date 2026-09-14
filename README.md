@@ -19,10 +19,10 @@
 ```text
 workspace.json
 content/
-  01-opening.md
-  02-memory.md
+  01-chapter.md
+  02-scene.md
 assets/
-  chapter-one-terrace.png
+  reference-image.png
 ```
 
 `workspace.json` 保存作品名称、内容块顺序、引用、图片路径、Map 颜色和视图设置；`content/*.md` 保存每个内容块的正文。再次点击“打开文件夹”即可完整重建工作区。
