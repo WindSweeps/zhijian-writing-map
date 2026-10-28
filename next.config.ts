@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   basePath: isGitHubPages ? "/zhijian-writing-map" : "",
   assetPrefix: isGitHubPages ? "/zhijian-writing-map/" : "",
   turbopack: { root: process.cwd() },
+  env: { NEXT_PUBLIC_BASE_PATH: isGitHubPages ? "/zhijian-writing-map" : "" },
 };
 
 export default nextConfig;

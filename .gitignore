@@ -3,3 +3,9 @@ node_modules
 out
 .DS_Store
 *.log
+public/pdf.worker.min.mjs
+public/pdf-cmaps/
+public/pdf-fonts/
+public/pdf-wasm/
+*.tsbuildinfo
+test-results/

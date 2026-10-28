@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "node scripts/prepare-pdf.mjs && next dev",
+    "build": "node scripts/prepare-pdf.mjs && next build",
+    "test:browser": "node tests/browser-smoke.mjs",
+    "test": "node --experimental-strip-types --test tests/*.test.ts"
   },
   "dependencies": {
+    "fflate": "0.8.2",
+    "react-markdown": "10.1.0",
+    "remark-gfm": "4.0.1",
+    "pdfjs-dist": "5.4.296",
     "next": "16.2.6",
     "react": "19.2.6",
     "react-dom": "19.2.6"

@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "枝间｜本地优先的写作地图",
-  description: "在本地文件夹中管理 Markdown 正文、JSON 结构、引用与多媒体内容。",
+  description: "连接 Markdown 笔记与 PDF 资料的本地优先思维地图，支持页码引用、层级关系和便携工程。",
 };
 
 export default function RootLayout({
