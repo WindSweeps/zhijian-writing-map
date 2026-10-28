@@ -74,6 +74,12 @@ function useBlobUrl(file?: Blob) {
   return resource?.file === file ? resource?.url : undefined;
 }
 
+function localAsset(assets: Record<string, Blob>, path: string) {
+  if (!Object.hasOwn(assets, path)) return undefined;
+  const file = assets[path];
+  return file instanceof Blob ? file : undefined;
+}
+
 function MarkdownImage({ src, alt, title, path, assets }: {
   src?: string;
   alt?: string;
@@ -82,7 +88,7 @@ function MarkdownImage({ src, alt, title, path, assets }: {
   assets: Record<string, Blob>;
 }) {
   const target = documentTarget(src, path);
-  const file = target.kind === "local" ? assets[target.path] : undefined;
+  const file = target.kind === "local" ? localAsset(assets, target.path) : undefined;
   const blobUrl = useBlobUrl(file);
   const url = target.kind === "external" ? target.url : blobUrl;
   const [failedUrl, setFailedUrl] = useState<string>();
@@ -104,7 +110,7 @@ function MarkdownLink({ href, title, children, path, assets, onNavigate }: {
 }) {
   const target = documentTarget(href, path);
   const isDocument = target.kind === "local" && /\.(?:md|markdown|pdf)$/i.test(target.path);
-  const file = target.kind === "local" && !isDocument ? assets[target.path] : undefined;
+  const file = target.kind === "local" && !isDocument ? localAsset(assets, target.path) : undefined;
   const blobUrl = useBlobUrl(file);
   if (target.kind === "external") {
     return <a href={target.url} title={title} target="_blank" rel="noopener noreferrer">{children}<span className="doc-external-mark" aria-hidden="true"> ↗</span></a>;

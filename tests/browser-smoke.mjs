@@ -284,6 +284,21 @@ try {
     assert.match(await page.locator(".message-bar[role=alert]").innerText(), /不安全的文件路径/);
     assert.equal(await page.locator(".map-node").count(), 3);
   });
+  await check("missing prototype-name resources render safely in a root Markdown file", async () => {
+    await page.getByRole("button", { name: "新工程", exact: true }).click();
+    await page.getByLabel("导入文件", { exact: true }).setInputFiles({
+      name: "note.md", mimeType: "text/markdown",
+      buffer: Buffer.from("# Missing resource regression\n\n![缺失图](toString)\n\n[缺失附件](constructor)\n"),
+    });
+    await page.waitForFunction(() => document.querySelectorAll(".map-node").length === 1);
+    await page.getByRole("button", { name: "预览", exact: true }).click();
+    await page.locator(".doc-missing-image").waitFor();
+    assert.match(await page.locator(".doc-missing-image").innerText(), /缺失图 · 无法显示图片（toString）/);
+    assert.equal(await page.locator(".doc-unavailable-link").innerText(), "缺失附件");
+    assert.equal(await page.getByRole("link", { name: "缺失附件", exact: true }).count(), 0);
+    assert.equal(await page.locator(".markdown-image").count(), 0);
+    await shot("missing-prototype-resources");
+  });
   assert.deepEqual(report.pageErrors, [], "browser runtime errors");
   assert.deepEqual(report.consoleErrors, [], "browser console errors");
   assert.deepEqual(report.failedRequests, [], "failed browser requests");
